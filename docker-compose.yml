@@ -1,0 +1,60 @@
+version: '3.9'
+services:
+  retroarch:
+    build: ./retroarch
+    volumes:
+      - ./roms:/app/roms
+    environment:
+      - DISPLAY=:99
+      - XDG_RUNTIME_DIR=/tmp/runtime
+      - ROM=contra.nes
+    networks:
+      - retroarch_network
+    devices:
+      - /dev/video1 
+    command: >
+      bash -c "rm -f /tmp/.X99-lock
+               Xvfb :99 -screen 0 1280x720x24 &
+               DISPLAY=:99 XDG_RUNTIME_DIR=/tmp/runtime retroarch -L /usr/lib/x86_64-linux-gnu/libretro/nestopia_libretro.so /app/roms/Mario.nes &
+               sleep 2 &&
+               echo aca------
+               echo $ROM
+               ffmpeg -f x11grab -video_size 1280x720 -i :99 -f v4l2 /dev/video1"
+
+  events-server:
+    build: ./events-server
+    ports:
+      - "8765:8765"
+    networks:
+      - retroarch_network
+    depends_on:
+      - retroarch
+      
+  web-app:
+    build: ./web-app
+    ports:
+      - "8001:8000"
+    networks:
+      - retroarch_network
+    devices:
+      - /dev/video1 
+    depends_on:
+      - retroarch
+
+
+                           
+  # webrtc:
+  #   image: mpromonet/webrtc-streamer:latest
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - retroarch_network
+  #   devices:
+  #     - /dev/video1 
+  #   depends_on:
+  #     - retroarch
+
+
+networks:
+  retroarch_network:
+    driver: bridge

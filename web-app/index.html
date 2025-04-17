@@ -1,0 +1,26 @@
+<html>
+<head>
+<script src="libs/adapter.min.js" ></script>
+<script src="webrtcstreamer.js" ></script>
+<script>        
+	var webRtcServer      = null;
+	window.onload         = function() { 
+		webRtcServer      = new WebRtcStreamer("emulador",location.protocol+"//"+location.hostname+":8000");
+		webRtcServer.connect("videocap://0");
+	}
+	window.onbeforeunload = function() { webRtcServer.disconnect(); }
+
+	const ws = new WebSocket('ws://emulador.midominio.com/ws/');
+	document.addEventListener('keydown', (e) => {
+ 	 ws.send(JSON.stringify({ key: e.key }));
+	 console.log(e.key)
+	});
+
+
+</script>
+</head>
+<body> 
+	<video id="emulador" autoplay muted  />
+	
+</body>
+</html>
