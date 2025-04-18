@@ -12,10 +12,14 @@ services:
       - retroarch_network
     devices:
       - /dev/video1 
+      - /dev/snd:/dev/snd
+      - /dev/input/event25
+    depends_on:
+      - events-server
     command: >
       bash -c "rm -f /tmp/.X99-lock
                Xvfb :99 -screen 0 1280x720x24 &
-               DISPLAY=:99 XDG_RUNTIME_DIR=/tmp/runtime retroarch -L /usr/lib/x86_64-linux-gnu/libretro/nestopia_libretro.so /app/roms/Mario.nes &
+               DISPLAY=:99 XDG_RUNTIME_DIR=/tmp/runtime retroarch --verbose -L /usr/lib/x86_64-linux-gnu/libretro/nestopia_libretro.so /app/roms/Mario.nes &
                sleep 2 &&
                echo aca------
                echo $ROM
@@ -24,16 +28,18 @@ services:
   events-server:
     build: ./events-server
     ports:
-      - "8765:8765"
+      - "8090:8090"
+    devices:
+      - /dev/uinput
     networks:
       - retroarch_network
-    depends_on:
-      - retroarch
-      
-  web-app:
-    build: ./web-app
+    
+
+
+  webrtc:
+    image: mpromonet/webrtc-streamer:latest
     ports:
-      - "8001:8000"
+      - "8000:8000"
     networks:
       - retroarch_network
     devices:
@@ -41,19 +47,16 @@ services:
     depends_on:
       - retroarch
 
-
-                           
-  # webrtc:
-  #   image: mpromonet/webrtc-streamer:latest
-  #   ports:
-  #     - "8000:8000"
-  #   networks:
-  #     - retroarch_network
-  #   devices:
-  #     - /dev/video1 
-  #   depends_on:
-  #     - retroarch
-
+  web-app:
+    build: ./web-app
+    ports:
+      - "8001:80"
+    networks:
+      - retroarch_network
+    devices:
+      - /dev/video1 
+    depends_on:
+      - retroarch
 
 networks:
   retroarch_network:

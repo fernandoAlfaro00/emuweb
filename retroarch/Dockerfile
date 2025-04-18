@@ -28,6 +28,8 @@ RUN apt update && apt install -y \
     libdbus-glib-1-2 \
     ca-certificates \
     unzip \
+    alsa-utils \
+    libasound2 \
     && apt clean
 
 RUN wget -O /tmp/nestopia_libretro.so.zip  https://buildbot.libretro.com/nightly/linux/x86_64/latest/nestopia_libretro.so.zip && unzip /tmp/nestopia_libretro.so.zip -d /usr/lib/x86_64-linux-gnu/libretro
@@ -35,13 +37,13 @@ RUN wget -O /tmp/nestopia_libretro.so.zip  https://buildbot.libretro.com/nightly
 
 
 # Crear un usuario no root
-RUN useradd -m retro && usermod -a -G video retro
-USER retro
-WORKDIR /home/retro
+# RUN useradd -m retro && usermod -a -G video retro
+# USER retro
+# WORKDIR /home/retro
 
 # Carpeta para las ROMs y configuración
-RUN mkdir -p /home/retro/roms /home/retro/config /home/retro/.config/retroarch
-COPY ./retroarch.cfg /home/retro/.config/retroarch/retroarch.cfg
+RUN mkdir -p /root/roms /root/config /root/.config/retroarch
+COPY ./retroarch.cfg /root/.config/retroarch/retroarch.cfg
 
 # ENTRYPOINT ["retroarch"]
 # CMD ["-L", "/usr/lib/x86_64-linux-gnu/libretro/nestopia_libretro.so", "/home/retro/roms/mario.nes"]

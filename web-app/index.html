@@ -10,17 +10,21 @@
 	}
 	window.onbeforeunload = function() { webRtcServer.disconnect(); }
 
-	const ws = new WebSocket('ws://emulador.midominio.com/ws/');
+	const ws = new WebSocket('ws://localhost:8090');
 	document.addEventListener('keydown', (e) => {
- 	 ws.send(JSON.stringify({ key: e.key }));
-	 console.log(e.key)
+		ws.send(JSON.stringify({ event: 'keydown', key: e.key }));
+        console.log(`Tecla presionada: ${e.key}`);
 	});
 
-
+	document.addEventListener('keyup', (e) => {
+		ws.send(JSON.stringify({ event: 'keyup', key: e.key }));
+        console.log(`Tecla liberada: ${e.key}`);
+	});
 </script>
 </head>
 <body> 
-	<video id="emulador" autoplay muted  />
-	
+	<div align='center'>
+		<video id="emulador" autoplay muted  />
+	</div>
 </body>
 </html>

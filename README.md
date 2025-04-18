@@ -31,3 +31,4 @@ sudo apt install v4l2loopback-dkms
 
 sudo modprobe v4l2loopback video_nr=1
 
+sudo modprobe uinput
