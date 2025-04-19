@@ -1,8 +1,8 @@
 # Plataforma emulacion desde el navegador
-![](/images/ejemplo.jpg)
+![](https://github.com/fernandoAlfaro00/emuweb/blob/main/images/ejemplo.png)
 
 ## Componenetes
-![](/images/comunicacion.jpg)
+![](https://github.com/fernandoAlfaro00/emuweb/blob/main/images/comunicacion.jpg)
 ## Requisitos
 - v4l2loopback-dkms (sudo apt install v4l2loopback-dkms)
 - uinput
