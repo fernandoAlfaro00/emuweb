@@ -1,6 +1,8 @@
 # Plataforma emulacion desde el navegador
+![](/images/ejemplo.jpg)
 
-
+## Componenetes
+![](/images/comunicacion.jpg)
 ## Requisitos
 - v4l2loopback-dkms (sudo apt install v4l2loopback-dkms)
 - uinput
@@ -65,4 +67,7 @@ evtest
 
 Test audio
 
+```bash
 speaker-test -Dpipewire -c2
+
+```
