@@ -1,31 +1,29 @@
-version: '3.9'
 services:
   retroarch:
     build: ./retroarch
+    # privileged: true
+    # network_mode: host
+    container_name: retroarch
     volumes:
       - ./roms:/app/roms
+      - /run/user/1000/pipewire-0:/tmp/pipewire-0
+      - /run/udev:/run/udev:rw
+      # - /dev/:/dev/:rw
     environment:
       - DISPLAY=:99
       - XDG_RUNTIME_DIR=/tmp/runtime
-      - ROM=contra.nes
+      - PIPEWIRE_RUNTIME_DIR=/tmp
     networks:
       - retroarch_network
     devices:
       - /dev/video1 
-      - /dev/snd:/dev/snd
       - /dev/input/event25
     depends_on:
       - events-server
-    command: >
-      bash -c "rm -f /tmp/.X99-lock
-               Xvfb :99 -screen 0 1280x720x24 &
-               DISPLAY=:99 XDG_RUNTIME_DIR=/tmp/runtime retroarch --verbose -L /usr/lib/x86_64-linux-gnu/libretro/nestopia_libretro.so /app/roms/Mario.nes &
-               sleep 2 &&
-               echo aca------
-               echo $ROM
-               ffmpeg -f x11grab -video_size 1280x720 -i :99 -f v4l2 /dev/video1"
 
   events-server:
+    container_name: virtual-gamepad
+    privileged: true
     build: ./events-server
     ports:
       - "8090:8090"
@@ -34,9 +32,8 @@ services:
     networks:
       - retroarch_network
     
-
-
   webrtc:
+    container_name:  webrtc
     image: mpromonet/webrtc-streamer:latest
     ports:
       - "8000:8000"
@@ -48,6 +45,7 @@ services:
       - retroarch
 
   web-app:
+    container_name: gui-app
     build: ./web-app
     ports:
       - "8001:80"
@@ -56,7 +54,7 @@ services:
     devices:
       - /dev/video1 
     depends_on:
-      - retroarch
+      - webrtc
 
 networks:
   retroarch_network:
