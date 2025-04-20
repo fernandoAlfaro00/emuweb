@@ -4,6 +4,8 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG=en_US.utf8
 ENV DEBIAN_FRONTEND=noninteractivev
 
+ARG src="NES Virtual Gamepad.cfg"
+ARG target="/root/.config/retroarch/autoconfig/udev/NES Virtual Gamepad.cfg"
 
 # Instalar dependencias básicas
 RUN apt update && apt install -y \
@@ -59,7 +61,7 @@ COPY ./retroarch.cfg /root/.config/retroarch/retroarch.cfg
 # RUN wget -q --show-progress -P /tmp https://buildbot.libretro.com/assets/frontend/autoconfig.zip && unzip -q /tmp/autoconfig.zip -d  /root/.config/retroarch/autoconfig && rm /tmp/autoconfig.zip
 
 RUN mkdir -p /root/.config/retroarch/autoconfig/udev
-COPY ./gamepad.cfg /root/.config/retroarch/autoconfig/udev/gamepad.cfg
+COPY ${src} ${target}
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

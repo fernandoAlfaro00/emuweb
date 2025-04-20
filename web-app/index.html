@@ -6,7 +6,7 @@
 	var webRtcServer      = null;
 	window.onload         = function() { 
 		webRtcServer      = new WebRtcStreamer("emulador",location.protocol+"//"+location.hostname+":8000");
-		webRtcServer.connect("videocap://0");
+		webRtcServer.connect("audiocap://0");
 	}
 	window.onbeforeunload = function() { webRtcServer.disconnect(); }
 
@@ -24,7 +24,7 @@
 </head>
 <body> 
 	<div align='center'>
-		<video id="emulador" autoplay muted  />
+		<video id="emulador" autoplay   />
 	</div>
 </body>
 </html>

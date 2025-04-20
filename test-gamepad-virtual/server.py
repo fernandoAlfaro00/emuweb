@@ -2,37 +2,35 @@ from evdev import UInput, AbsInfo, ecodes as e
 import asyncio
 import websockets
 import json
-
 # Mapeo entre teclas y botones del gamepad virtual
 KEY_MAPPING = {
     'a': e.BTN_A,
-    's': e.BTN_B,
+    'b': e.BTN_B,
     'Enter': e.BTN_START,
     'Shift': e.BTN_SELECT,
-    'ArrowLeft': e.BTN_DPAD_LEFT,
-    'ArrowRight': e.BTN_DPAD_RIGHT,
-    'ArrowUp': e.BTN_DPAD_UP,
-    'ArrowDown': e.BTN_DPAD_DOWN
+    'ArrowLeft': e.ABS_X,
+    'ArrowRight': e.ABS_X,
+    'ArrowUp': e.ABS_Y,
+    'ArrowDown': e.ABS_Y,
 }
 
-# Mapeo NES: A, B, Start, Select, y la cruceta (D-Pad)
+ABS_VALUE = {
+    'ArrowLeft': -1,
+    'ArrowRight': 1,
+    'ArrowUp': -1,
+    'ArrowDown': 1
+}
+
 capabilities = {
-    e.EV_KEY: [
-        e.BTN_A,        # NES A
-        e.BTN_B,        # NES B
-        e.BTN_START,    # NES Start
-        e.BTN_SELECT,   # NES Select
-        e.BTN_DPAD_UP,
-        e.BTN_DPAD_DOWN,
-        e.BTN_DPAD_LEFT,
-        e.BTN_DPAD_RIGHT
-    ]
+    e.EV_KEY: [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT],
+    e.EV_ABS: [
+        (e.ABS_X, AbsInfo(value=0, min=0, max=255,fuzz=0, flat=0, resolution=0)),
+        (e.ABS_Y, AbsInfo(0, 0, 255, 0, 0, 0)),
+        (e.ABS_MT_POSITION_X, (0, 128, 255, 0)) ]
 }
 
-# Crear el dispositivo virtual
-ui = UInput(events=capabilities,
-            name="NES Virtual Gamepad",
-            bustype=e.BUS_USB)
+ui = UInput(capabilities, name="VirtualGamepad1")
+
 
 # Variables para llevar el registro de teclas presionadas
 pressed_keys = set()
@@ -41,7 +39,6 @@ async def handler(websocket):
         try:
             data = json.loads(message)
             key = data.get("key")
-            key = key.lower()
             event = data.get("event")
 
             if key in pressed_keys and event == 'keydown':
@@ -52,8 +49,10 @@ async def handler(websocket):
                 print("Presionado tecla "+key)
                 if key in KEY_MAPPING:
                     code = KEY_MAPPING[key]
-                    if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT ,  e.BTN_DPAD_UP, e.BTN_DPAD_DOWN, e.BTN_DPAD_LEFT, e.BTN_DPAD_RIGHT ]:
+                    if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT]:
                         ui.write(e.EV_KEY, code, 1)
+                    elif code in [e.ABS_X, e.ABS_Y]:
+                        ui.write(e.EV_ABS, code, ABS_VALUE[key])
                     ui.syn()
 
             elif event == "keyup":
@@ -61,8 +60,10 @@ async def handler(websocket):
                 print("Soltando tecla "+key)
                 if key in KEY_MAPPING:
                     code = KEY_MAPPING[key]
-                    if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT ,  e.BTN_DPAD_UP, e.BTN_DPAD_DOWN, e.BTN_DPAD_LEFT, e.BTN_DPAD_RIGHT ]:
+                    if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT]:
                         ui.write(e.EV_KEY, code, 0)
+                    elif code in [e.ABS_X, e.ABS_Y]:
+                        ui.write(e.EV_ABS, code, 0)
                     ui.syn()
 
         except Exception as ex:

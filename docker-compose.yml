@@ -1,18 +1,16 @@
 services:
   retroarch:
     build: ./retroarch
-    privileged: true
-    # network_mode: host
+    # privileged: true
     container_name: retroarch
     volumes:
       - ./roms:/app/roms
-      # - /run/user/1000/pipewire-0:/tmp/pipewire-0
+      - /run/user/1000/pipewire-0:/tmp/pipewire-0
       - /run/udev:/run/udev
-      # - /dev/:/dev/
     environment:
       - DISPLAY=:99
       - XDG_RUNTIME_DIR=/tmp/runtime
-      # - PIPEWIRE_RUNTIME_DIR=/tmp
+      - PIPEWIRE_RUNTIME_DIR=/tmp
     networks:
       - retroarch_network
     devices:
@@ -43,6 +41,7 @@ services:
       - retroarch_network
     devices:
       - /dev/video1 
+      - /dev/snd/
     depends_on:
       - retroarch
 
@@ -54,7 +53,8 @@ services:
     networks:
       - retroarch_network
     devices:
-      - /dev/video1 
+      - /dev/video1
+      - /dev/snd/ 
     depends_on:
       - webrtc
 

@@ -108,10 +108,18 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="U7VDwsYy5-kSZG4rv5OB-31" target="U7VDwsYy5-kSZG4rv5OB-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-60" value="Senal que se la creado un nuevo device" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="U7VDwsYy5-kSZG4rv5OB-57">
+          <mxGeometry x="0.108" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="U7VDwsYy5-kSZG4rv5OB-31" value="kernel module&amp;nbsp;&lt;div&gt;&lt;b&gt;uinput&lt;/b&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="-80" y="545" width="150" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="U7VDwsYy5-kSZG4rv5OB-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.563;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="U7VDwsYy5-kSZG4rv5OB-5" target="U7VDwsYy5-kSZG4rv5OB-31">
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.563;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;" edge="1" parent="1" source="U7VDwsYy5-kSZG4rv5OB-5" target="U7VDwsYy5-kSZG4rv5OB-31">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="180" y="590" />
@@ -152,6 +160,23 @@
         </mxCell>
         <mxCell id="U7VDwsYy5-kSZG4rv5OB-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="U7VDwsYy5-kSZG4rv5OB-52">
           <mxGeometry y="7.5" width="22.857142857142854" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-300" y="290" as="sourcePoint" />
+            <mxPoint x="120" y="210" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-300" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-63" value="Notification&amp;nbsp; de nuevo device" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="U7VDwsYy5-kSZG4rv5OB-61">
+          <mxGeometry x="-0.0248" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U7VDwsYy5-kSZG4rv5OB-55" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;udev&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="280" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

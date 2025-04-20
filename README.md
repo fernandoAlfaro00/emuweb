@@ -15,7 +15,7 @@
 #### v4l2loopback - permite crear dispositivo de video virtuales
 
 ```bash
- sudo modprobe v4l2loopback  v4l2loopback video_nr=1
+ sudo modprobe  v4l2loopback video_nr=1
 
  sudo modprobe v4l2loopback video_nr=10 card_label="virtualcam" exclusive_caps=1
 ```
