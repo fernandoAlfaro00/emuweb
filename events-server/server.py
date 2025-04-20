@@ -2,10 +2,6 @@ from evdev import UInput, AbsInfo, ecodes as e
 import asyncio
 import websockets
 import json
-
-
-print(e)
-
 # Mapeo entre teclas y botones del gamepad virtual
 KEY_MAPPING = {
     'a': e.BTN_A,
@@ -33,23 +29,11 @@ capabilities = {
         (e.ABS_MT_POSITION_X, (0, 128, 255, 0)) ]
 }
 
-
 ui = UInput(capabilities, name="VirtualGamepad1")
 
 
 # Variables para llevar el registro de teclas presionadas
 pressed_keys = set()
-
-
-    # while True: 
-    #     message = await websocket.recv()
-    #     print(f'message: {message}')
-    #     if message == "press_A":
-    #         ui.write(e.EV_KEY, e.BTN_A, 1)
-    #         ui.syn()
-    #     elif message == "release_A":
-    #         ui.write(e.EV_KEY, e.BTN_A, 0)
-    #         ui.syn()
 async def handler(websocket):
     async for message in websocket:
         try:
@@ -59,12 +43,10 @@ async def handler(websocket):
 
             if key in pressed_keys and event == 'keydown':
                 continue  # Evita repetir si ya está presionado
-            print("aca")
-            print(e)
 
             if event == "keydown":
                 pressed_keys.add(key)
-
+                print("Presionado tecla "+key)
                 if key in KEY_MAPPING:
                     code = KEY_MAPPING[key]
                     if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT]:
@@ -75,7 +57,7 @@ async def handler(websocket):
 
             elif event == "keyup":
                 pressed_keys.remove(key)
-
+                print("Soltando tecla "+key)
                 if key in KEY_MAPPING:
                     code = KEY_MAPPING[key]
                     if code in [e.BTN_A, e.BTN_B, e.BTN_START, e.BTN_SELECT]:

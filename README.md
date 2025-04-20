@@ -2,7 +2,7 @@
 ![](https://github.com/fernandoAlfaro00/emuweb/blob/main/images/ejemplo.png)
 
 ## Componenetes
-![](https://github.com/fernandoAlfaro00/emuweb/blob/main/images/comunicacion.jpg)
+![](https://github.com/fernandoAlfaro00/emuweb/blob/main/images/comunicacion.png)
 ## Requisitos
 - v4l2loopback-dkms (sudo apt install v4l2loopback-dkms)
 - uinput

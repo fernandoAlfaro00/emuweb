@@ -56,8 +56,10 @@ RUN wget -O /tmp/nestopia_libretro.so.zip \
 RUN mkdir -p /root/roms /root/config /root/.config/retroarch
 COPY ./retroarch.cfg /root/.config/retroarch/retroarch.cfg
 
-# RUN mkdir -p /root/.config/retroarch/autoconfig/udev
-# COPY ./gamepad.cfg /root/.config/retroarch/autoconfig/gamepad.cfg
+# RUN wget -q --show-progress -P /tmp https://buildbot.libretro.com/assets/frontend/autoconfig.zip && unzip -q /tmp/autoconfig.zip -d  /root/.config/retroarch/autoconfig && rm /tmp/autoconfig.zip
+
+RUN mkdir -p /root/.config/retroarch/autoconfig/udev
+COPY ./gamepad.cfg /root/.config/retroarch/autoconfig/udev/gamepad.cfg
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

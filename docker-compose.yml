@@ -1,23 +1,25 @@
 services:
   retroarch:
     build: ./retroarch
-    # privileged: true
+    privileged: true
     # network_mode: host
     container_name: retroarch
     volumes:
       - ./roms:/app/roms
-      - /run/user/1000/pipewire-0:/tmp/pipewire-0
-      - /run/udev:/run/udev:rw
-      # - /dev/:/dev/:rw
+      # - /run/user/1000/pipewire-0:/tmp/pipewire-0
+      - /run/udev:/run/udev
+      # - /dev/:/dev/
     environment:
       - DISPLAY=:99
       - XDG_RUNTIME_DIR=/tmp/runtime
-      - PIPEWIRE_RUNTIME_DIR=/tmp
+      # - PIPEWIRE_RUNTIME_DIR=/tmp
     networks:
       - retroarch_network
     devices:
       - /dev/video1 
       - /dev/input/event25
+      - /dev/input/js0
+      - /dev/uinput
     depends_on:
       - events-server
 
