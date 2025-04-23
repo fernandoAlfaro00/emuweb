@@ -35,3 +35,19 @@ ffmpeg \
   -f pulse -i default \
   -c:v rawvideo -c:a aac \
   -f v4l2 /dev/video1
+
+
+
+
+ejemplo conectar audio de un sistema a otro pipewire 
+
+export SERVER_AUDIO=debian
+
+receptor 
+pactl load-module module-native-protocol-tcp port=4656 listen=0.0.0.0 auth-anonymous=true
+
+emite 
+pactl load-module module-tunnel-sink server=tcp:$SERVER_AUDIO:4656
+
+
+# RUN wget -q --show-progress -P /tmp https://buildbot.libretro.com/assets/frontend/autoconfig.zip && unzip -q /tmp/autoconfig.zip -d  /root/.config/retroarch/autoconfig && rm /tmp/autoconfig.zip

@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-
 rm -f /tmp/.X99-lock
 Xvfb :99 -screen 0 1280x720x24 &
 pipewire-pulse &

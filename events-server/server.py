@@ -7,6 +7,8 @@ import json
 KEY_MAPPING = {
     'a': e.BTN_A,
     's': e.BTN_B,
+    'A': e.BTN_A,
+    'S': e.BTN_B,
     'Enter': e.BTN_START,
     'Shift': e.BTN_SELECT,
     'ArrowLeft': e.BTN_DPAD_LEFT,
@@ -41,7 +43,7 @@ async def handler(websocket):
         try:
             data = json.loads(message)
             key = data.get("key")
-            key = key.lower()
+            # key = key.lower()
             event = data.get("event")
 
             if key in pressed_keys and event == 'keydown':
@@ -70,7 +72,7 @@ async def handler(websocket):
 
 
 async def main():
-    print(f'runninc main...')
+    print(f'Iniciado server...')
     async with websockets.serve(handler,"",8090):
         await asyncio.Future()
 

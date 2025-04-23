@@ -1,7 +1,6 @@
 services:
   retroarch:
     build: ./retroarch
-    # privileged: true
     container_name: retroarch
     volumes:
       - ./roms:/app/roms
@@ -15,7 +14,7 @@ services:
       - retroarch_network
     devices:
       - /dev/video1 
-      - /dev/input/event25
+      - /dev/input/event258
       - /dev/input/js0
       - /dev/uinput
     depends_on:
@@ -57,7 +56,7 @@ services:
       - /dev/snd/ 
     depends_on:
       - webrtc
-
+      
 networks:
   retroarch_network:
     driver: bridge

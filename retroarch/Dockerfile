@@ -4,36 +4,21 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG=en_US.utf8
 ENV DEBIAN_FRONTEND=noninteractivev
 
-ARG src="NES Virtual Gamepad.cfg"
+ARG src=".config/autoconfig/NES Virtual Gamepad.cfg"
 ARG target="/root/.config/retroarch/autoconfig/udev/NES Virtual Gamepad.cfg"
 
 # Instalar dependencias básicas
 RUN apt update && apt install -y \
     software-properties-common \
     wget \
-    curl \
-    git \
     unzip \
     retroarch \
     xvfb \
     ffmpeg \
     evtest \
-    x11vnc \
-    # libgl1 \
-    # libxv1 \
-    # libxrandr2 \
-    # libxi6 \
-    # libxss1 \
-    # libxcursor1 \
-    # libxcomposite1 \
-    # libpulse0 \
-    # libudev1 \
-    # libxdamage1 \
-    # libxinerama1 \
-    # libgtk-3-0 \
-    # libdbus-glib-1-2 \
+    x11vnc 
     # dbus-x11 \
-    ca-certificates 
+    # ca-certificates 
 
 
 
@@ -48,7 +33,6 @@ RUN wget -O /tmp/nestopia_libretro.so.zip \
    && unzip /tmp/nestopia_libretro.so.zip -d /usr/lib/x86_64-linux-gnu/libretro
 
 
-
 # Crear un usuario no root
 # RUN useradd -m retro && usermod -a -G video retro
 # USER retro
@@ -56,9 +40,7 @@ RUN wget -O /tmp/nestopia_libretro.so.zip \
 
 # Carpeta para las ROMs y configuración
 RUN mkdir -p /root/roms /root/config /root/.config/retroarch
-COPY ./retroarch.cfg /root/.config/retroarch/retroarch.cfg
-
-# RUN wget -q --show-progress -P /tmp https://buildbot.libretro.com/assets/frontend/autoconfig.zip && unzip -q /tmp/autoconfig.zip -d  /root/.config/retroarch/autoconfig && rm /tmp/autoconfig.zip
+COPY ./.config/retroarch.cfg /root/.config/retroarch/retroarch.cfg
 
 RUN mkdir -p /root/.config/retroarch/autoconfig/udev
 COPY ${src} ${target}

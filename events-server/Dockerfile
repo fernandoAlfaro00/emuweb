@@ -1,10 +1,10 @@
 FROM python:3.13
 
-# RUN apt install xdotool
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+
+COPY server.py server.py
 
 CMD [ "python", "server.py" ]
